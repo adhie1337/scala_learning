@@ -5,6 +5,8 @@ class Rational(numerator: Int, denominator: Int) {
   val isFinite = d != 0
   val isWhole = d == 1
 
+  def this(numerator: Int) = this(numerator, 1)
+
   def add(that: Rational): Rational =
     if (!isFinite) this
     else if (!that.isFinite) that 
@@ -16,8 +18,9 @@ class Rational(numerator: Int, denominator: Int) {
 
   override def toString = 
     if (isWhole) n.toString
-    else if (isFinite) s"$n/$d" 
-    else "Infinity"
+    else if (!isFinite) "Infinity"
+    else if (n > d) s"${n / d} ${ n % d }/$d"
+    else s"$n/$d" 
 
   private def gcd(a: Int, b: Int): Int = 
     if (b == 0) a else gcd(b, a % b)
