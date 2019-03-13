@@ -1,7 +1,8 @@
 class Rational(numerator: Int, denominator: Int) {
   val g = gcd(numerator.abs, denominator.abs)
-  val n = numerator / g
-  val d = denominator / g
+  val isNegative = numerator * denominator < 0
+  val n = (if (isNegative) -1 else 1) * numerator.abs / g
+  val d = denominator.abs / g
   val isFinite = d != 0
   val isWhole = d == 1
 
@@ -34,7 +35,7 @@ class Rational(numerator: Int, denominator: Int) {
   override def toString = 
     if (isWhole) n.toString
     else if (!isFinite) "Infinity"
-    else if (n > d) s"${n / d} ${ n % d }/$d"
+    else if (n.abs > d.abs) s"${n / d} ${ (n % d).abs }/${ d }"
     else s"$n/$d" 
 
   private def gcd(a: Int, b: Int): Int = 
