@@ -12,6 +12,8 @@ class Rational(numerator: Int, denominator: Int) {
       n * that.d + d * that.n,
       d * that.d)
 
+  def + = add(_)
+
   override def toString = 
     if (isWhole) n.toString
     else if (isFinite) s"$n/$d" 
