@@ -1,5 +1,6 @@
 class Rational(numerator: Int, denominator: Int) {
-  val g = gcd(numerator.abs, denominator.abs)
+  private val g = gcd(numerator.abs, denominator.abs)
+
   val isNegative = numerator * denominator < 0
   val n = (if (isNegative) -1 else 1) * numerator.abs / g
   val d = denominator.abs / g
