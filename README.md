@@ -34,6 +34,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Special thanks to the writers of the book Programming in Scala, 3rd edition
+Special thanks to:
+
+* the writers of the book Programming in Scala, 3rd edition
+* the guys at EPFL who made the online course [Functional Programming Principles in Scala](https://www.coursera.org/learn/progfun1?specialization=scala)
 * etc
 
