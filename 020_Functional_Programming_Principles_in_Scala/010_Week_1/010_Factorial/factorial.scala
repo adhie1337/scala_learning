@@ -1,6 +1,6 @@
 
-def factorial(i: Double): Double = {
-  def factorial(i: Double, accum: Double): Double = 
+def factorial(i: Int): Int = {
+  def factorial(i: Int, accum: Int): Int = 
     if (i == 1) accum
     else factorial(i - 1, i * accum)
 
