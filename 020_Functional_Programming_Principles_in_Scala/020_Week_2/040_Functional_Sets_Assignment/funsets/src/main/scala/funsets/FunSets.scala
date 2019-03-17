@@ -11,6 +11,9 @@ object FunSets {
    */
   type Set = Int => Boolean
 
+  private def combine(combinator: (Boolean, Boolean) => Boolean)(a: Set, b: Set):Set =
+    elem => combinator(a(elem), b(elem))
+
   /**
    * Indicates whether a set contains a given element.
    */
@@ -19,20 +22,19 @@ object FunSets {
   /**
    * Returns the set of the one given element.
    */
-    def singletonSet(elem: Int): Set = ???
+  def singletonSet(elem: Int): Set = _ == elem
   
-
   /**
    * Returns the union of the two given sets,
    * the sets of all elements that are in either `s` or `t`.
    */
-    def union(s: Set, t: Set): Set = ???
+  def union(s: Set, t: Set): Set = combine(_ || _)(s, t)
   
   /**
    * Returns the intersection of the two given sets,
    * the set of all elements that are both in `s` and `t`.
    */
-    def intersect(s: Set, t: Set): Set = ???
+  def intersect(s: Set, t: Set): Set = ???
   
   /**
    * Returns the difference of the two given sets,

@@ -101,6 +101,12 @@ class FunSetSuite extends FunSuite {
     }
   }
 
+  test("singleton has only one element") {
+    new TestSets {
+      assert(!FunSets.toString(s1).contains(','))
+    }
+  }
+
   test("union contains all elements of each set") {
     new TestSets {
       val s = union(s1, s2)
