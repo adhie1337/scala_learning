@@ -31,7 +31,16 @@ object Main {
   /**
    * Exercise 2
    */
-    def balance(chars: List[Char]): Boolean = ???
+    def balance(chars: List[Char]): Boolean = {
+      def toValue(c: Char) = c match {
+        case '(' => 1
+        case ')' => -1
+        case _ => 0
+      }
+      val runningSum = chars.map(toValue).scanLeft(0)(_ + _)
+
+      runningSum.last == 0 && runningSum.forall(_ >= 0)
+    }
   
   /**
    * Exercise 3
