@@ -9,6 +9,8 @@ class Rational(numerator: Int, denominator: Int) {
 
   def this(numerator: Int) = this(numerator, 1)
 
+  def neg: Rational = new Rational(-n, d)
+
   def add(that: Rational) =
     if (!isFinite) this
     else if (!that.isFinite) that 
@@ -17,6 +19,10 @@ class Rational(numerator: Int, denominator: Int) {
       d * that.d)
 
   def + = add(_)
+
+  def sub(that: Rational) = add(that.neg)
+
+  def - = sub(_)
 
   def multiply(that: Rational) =
     if (!isFinite) this

@@ -21,3 +21,4 @@ def sqrt(x: Double): Double = {
 
   fixedPoint(isGoodEnough, improve, 1)(x)
 }
+
