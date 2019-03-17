@@ -11,6 +11,8 @@ class Rational(numerator: Int, denominator: Int) {
 
   def neg: Rational = new Rational(-n, d)
 
+  def unary_- = neg
+
   def add(that: Rational) =
     if (!isFinite) this
     else if (!that.isFinite) that 
@@ -30,6 +32,16 @@ class Rational(numerator: Int, denominator: Int) {
     else new Rational(n * that.n, d * that.d)
 
   def * = multiply(_)
+
+  def less(that: Rational) = n * that.d < that.n * d
+
+  def < = less(_)
+
+  def more: Rational => Boolean = !less(_)
+
+  def > = more(_)
+
+  def max(that: Rational) = if (less(that)) that else this
 
   override def equals(that: Any) =
     that match {

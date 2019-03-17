@@ -33,4 +33,6 @@ subresult = new Rational(5, 3) - new Rational(4, 3)
 println(raw"""-Is 5/3 - 4/3 equal to 1/3?
              |-${ isIt(subresult == third) }""")
 
+println(raw"""-Is 3/4 > 1/2?
+             |-${ isIt(threeQuarters > half) }""")
 
