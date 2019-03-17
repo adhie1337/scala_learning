@@ -13,3 +13,5 @@ def sum: (Int => Int) => (Int, Int) => Int
 def product: (Int => Int) => (Int, Int) => Int 
   = aggregate(1, _ * _)
 
+def fact(i: Int) = product(x => x)(1, i)
+
