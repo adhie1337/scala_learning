@@ -108,6 +108,8 @@ abstract class TweetSet {
   def foreach(f: Tweet => Unit): Unit
 
   def isEmpty: Boolean
+
+  def toList: List[Tweet]
 }
 
 class Empty extends TweetSet {
@@ -130,6 +132,8 @@ class Empty extends TweetSet {
   override def mostRetweeted: Tweet = throw new NoSuchElementException("mostRetweeted")
 
   val isEmpty = true
+
+  val toList = List()
 }
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
@@ -165,15 +169,19 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     right.foreach(f)
   }
 
-  override def union(that: TweetSet): TweetSet = that union left union right incl elem
+  override def union(that: TweetSet): TweetSet = {
+    def union(result: TweetSet, tweets: List[Tweet]): TweetSet =
+      if (tweets.isEmpty) result
+      else union(result.incl(tweets.head), tweets.tail)
 
-  override def mostRetweeted: Tweet =
-    if (left.isEmpty && right.isEmpty) elem
-    else if(left.isEmpty) Array(elem, right.mostRetweeted).maxBy(_.retweets)
-    else if(right.isEmpty) Array(elem, left.mostRetweeted).maxBy(_.retweets)
-    else Array(elem, right.mostRetweeted, left.mostRetweeted).maxBy(_.retweets)
+    union(that, toList)
+  }
+
+  override def mostRetweeted: Tweet = toList.maxBy(_.retweets)
 
   val isEmpty = false
+
+  val toList = List(elem) ++ left.toList ++ right.toList
 }
 
 trait TweetList {
