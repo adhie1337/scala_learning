@@ -110,7 +110,14 @@ object Anagrams {
    *  Note: the resulting value is an occurrence - meaning it is sorted
    *  and has no zero-entries.
    */
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = ???
+  def subtract(x: Occurrences, y: Occurrences): Occurrences = (x.sorted, y.sorted) match {
+    case (Nil, _) => x
+    case (_, Nil) => x
+    case (x :: xs, z :: zs) =>
+      if (x._1 == z._1 && x._2 == z._2) subtract(xs, zs)
+      else if (x._1 == z._1) (x._1, x._2 - z._2) :: subtract(xs, zs)
+      else x :: subtract(xs, y)
+  }
 
   /** Returns a list of all anagram sentences of the given sentence.
    *
