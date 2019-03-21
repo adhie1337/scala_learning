@@ -35,7 +35,7 @@ object Anagrams {
    *  Note: you must use `groupBy` to implement this method!
    */
   def wordOccurrences(w: Word): Occurrences =
-    ((w toLowerCase) groupBy identity  toList) map (pair => (pair._1, pair._2.length)) sorted
+    (w.toLowerCase groupBy identity).toList.map(pair => (pair._1, pair._2.length)).sorted
 
   /** Converts a sentence into its character occurrence list. */
   def sentenceOccurrences(s: Sentence): Occurrences = wordOccurrences(s.mkString(""))
@@ -58,7 +58,7 @@ object Anagrams {
   lazy val dictionaryByOccurrences: Map[Occurrences, List[Word]] = dictionary groupBy wordOccurrences
 
   /** Returns all the anagrams of a given word. */
-  def wordAnagrams(word: Word): List[Word] = dictionaryByOccurrences get (wordOccurrences(word)) match {
+  def wordAnagrams(word: Word): List[Word] = dictionaryByOccurrences get wordOccurrences(word) match {
     case None => List()
     case Some (list) => list
   }
@@ -113,10 +113,10 @@ object Anagrams {
   def subtract(x: Occurrences, y: Occurrences): Occurrences = (x.sorted, y.sorted) match {
     case (Nil, _) => x
     case (_, Nil) => x
-    case (x :: xs, z :: zs) =>
-      if (x._1 == z._1 && x._2 == z._2) subtract(xs, zs)
-      else if (x._1 == z._1) (x._1, x._2 - z._2) :: subtract(xs, zs)
-      else x :: subtract(xs, y)
+    case (x1 :: x1s, z :: zs) =>
+      if (x1._1 == z._1 && x1._2 == z._2) subtract(x1s, zs)
+      else if (x1._1 == z._1) (x1._1, x1._2 - z._2) :: subtract(x1s, zs)
+      else x1 :: subtract(x1s, y)
   }
 
   /** Returns a list of all anagram sentences of the given sentence.
