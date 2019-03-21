@@ -159,5 +159,31 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    val occ = sentenceOccurrences(sentence)
+    def wrap[T]: List[T] => Option[List[T]] = {
+      case Nil => None
+      case list => Some(list)
+    }
+    def sentenceAnagrams(so: Occurrences, prefix: Sentence): Option[List[Sentence]] =
+      so match {
+        case Nil => if (sentenceOccurrences(prefix) == occ) Some(List(prefix)) else None
+        case _ =>
+          wrap(for {
+            c <- combinations(so)
+            if c.nonEmpty
+            o = dictionaryByOccurrences get c
+            if o.isDefined
+            w <- o.get
+            inner = sentenceAnagrams(subtract(so, c), w :: prefix)
+            if inner.isDefined
+            s <- inner.get
+          } yield s)
+      }
+
+    sentenceAnagrams(occ, List()) match {
+      case None => List(List())
+      case Some(list) => list
+    }
+  }
 }
