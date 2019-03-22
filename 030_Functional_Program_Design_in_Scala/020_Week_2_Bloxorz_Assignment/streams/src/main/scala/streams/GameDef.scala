@@ -91,9 +91,6 @@ trait GameDef {
    */
   case class Block(b1: Pos, b2: Pos) {
 
-    // checks the requirement mentioned above
-    require(b1.row <= b2.row && b1.col <= b2.col, "Invalid block position: b1=" + b1 + ", b2=" + b2)
-
     /**
      * Returns a block where the `row` coordinates of `b1` and `b2` are
      * changed by `d1` and `d2`, respectively.
@@ -147,7 +144,7 @@ trait GameDef {
     /**
      * Returns `true` if the block is standing.
      */
-    def isStanding: Boolean = b1 != b2
+    def isStanding: Boolean = b1 == b2
 
     /**
      * Returns `true` if the block is entirely inside the terrain.
