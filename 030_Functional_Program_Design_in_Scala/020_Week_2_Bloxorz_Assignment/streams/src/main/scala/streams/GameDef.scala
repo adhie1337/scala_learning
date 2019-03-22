@@ -133,7 +133,7 @@ trait GameDef {
      * Returns the list of blocks that can be obtained by moving
      * the current block, together with the corresponding move.
      */
-    def neighbors: List[(Block, Move)] = List((left, Left), (right, Right), (up, Up), (down, Down))
+    def neighbors: List[(Block, Move)] = List((right, Right), (down, Down), (left, Left), (up, Up))
 
     /**
      * Returns the list of positions reachable from the current block
@@ -149,6 +149,6 @@ trait GameDef {
     /**
      * Returns `true` if the block is entirely inside the terrain.
      */
-    def isLegal: Boolean = terrain(b1) && (isStanding || terrain(b2))
+    def isLegal: Boolean = terrain(b1) && terrain(b2)
   }
 }
