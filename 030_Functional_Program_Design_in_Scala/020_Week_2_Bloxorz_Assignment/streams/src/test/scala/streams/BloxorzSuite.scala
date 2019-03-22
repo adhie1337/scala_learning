@@ -66,11 +66,29 @@ class BloxorzSuite extends FunSuite {
 
   test("neighborsWithHistory example") {
     new Level1 {
-      val expected: Set[(Block, List[Move])] = Set(
+      val expected: Stream[(Block, List[Move])] = Set(
         (Block(Pos(1,2),Pos(1,3)), List(Right,Left,Up)),
         (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+      ).toStream
+      val actual: Stream[(Block, List[Move])] = neighborsWithHistory(Block(Pos(1,1),Pos(1,1)), List(Left,Up))
+
+      assert(expected === actual)
+    }
+  }
+
+  test("newNeighborsOnly example") {
+    new Level1 {
+      val expected: Stream[(Block, List[Move])] =   Set(
+        (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+      ).toStream
+      val actual: Stream[(Block, List[Move])] = newNeighborsOnly(
+        Set(
+          (Block(Pos(1,2),Pos(1,3)), List(Right,Left,Up)),
+          (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+        ).toStream,
+
+        Set(Block(Pos(1,2),Pos(1,3)), Block(Pos(1,1),Pos(1,1)))
       )
-      val actual: Set[(Block, List[Move])] = neighborsWithHistory(Block(Pos(1,1),Pos(1,1)), List(Left,Up)).toSet
 
       assert(expected === actual)
     }
