@@ -76,8 +76,8 @@ trait Bogus4BinomialHeap extends BinomialHeap {
 }
 
 trait Bogus5BinomialHeap extends BinomialHeap {
-  override def meld(ts1: H, ts2: H) = ts1 match {
-    case Nil => ts2
-    case t1::ts1 => List(Node(t1.x, t1.r, ts1++ts2))
+  override def meld(ts1: H, ts2: H) = (ts1++ts2).sortBy(_.x)(ord) match {
+    case Nil => Nil
+    case t::ts => List(Node(t.x, t.r, ts))
   }
 }
