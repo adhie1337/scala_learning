@@ -1,0 +1,3 @@
+package quickcheck
+
+object QuickCheckBinomialHeap extends QuickCheckHeap with BinomialHeap
