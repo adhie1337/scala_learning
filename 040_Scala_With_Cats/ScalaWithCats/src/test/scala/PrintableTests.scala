@@ -14,4 +14,12 @@ class PrintableTests extends org.scalatest.FunSuite {
     assert(cat.format == "Cirmi is a 4 year-old, brown cat")
   }
 
+  test("Printing cats with cats show syntax") {
+    import cats.syntax.show._
+
+    val cat = Cat("Cirmi", 4, "brown")
+
+    assert(cat.show == "Cirmi is a 4 year-old, brown cat")
+  }
+
 }
