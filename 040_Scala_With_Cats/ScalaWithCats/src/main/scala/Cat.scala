@@ -2,6 +2,7 @@ import cats._
 import cats.instances.int._
 import cats.instances.string._
 import cats.syntax.show._
+import cats.syntax.eq._
 
 final case class Cat(name: String, age: Int, color: String)
 
@@ -23,4 +24,9 @@ object Cat {
 
     s"$name is a $age year-old, $color cat"
   }
+
+  implicit val eq: Eq[Cat] = (cat, otherCat) =>
+    cat.name.eqv(otherCat.name) &&
+    cat.age.eqv(otherCat.age) &&
+    cat.color.eqv(otherCat.color)
 }
