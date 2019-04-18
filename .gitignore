@@ -1,3 +1,4 @@
+*.dat
 *.class
 *.swp
 .DS_Store
