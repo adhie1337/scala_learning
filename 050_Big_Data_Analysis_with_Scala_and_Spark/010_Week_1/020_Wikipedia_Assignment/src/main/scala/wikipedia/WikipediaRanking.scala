@@ -11,7 +11,8 @@ case class WikipediaArticle(title: String, text: String) {
     * @return Whether the text of this article mentions `lang` or not
     * @param lang Language to look for (e.g. "Scala")
     */
-  def mentionsLanguage(lang: String): Boolean = text.split(' ').contains(lang)
+  lazy val words = text.split(' ')
+  def mentionsLanguage(lang: String): Boolean = words.contains(lang)
 }
 
 object WikipediaRanking {
@@ -46,7 +47,10 @@ object WikipediaRanking {
   /* Compute an inverted index of the set of articles, mapping each language
    * to the Wikipedia pages in which it occurs.
    */
-  def makeIndex(langs: List[String], rdd: RDD[WikipediaArticle]): RDD[(String, Iterable[WikipediaArticle])] = ???
+  def makeIndex(langs: List[String], rdd: RDD[WikipediaArticle]): RDD[(String, Iterable[WikipediaArticle])]
+    = rdd flatMap (article => article.words.intersect(langs).map(word => (word, article))) groupBy
+      (_._1) map
+      { case (key, iterable) => (key, iterable map (pair => pair._2)) }
 
   /* (2) Compute the language ranking again, but now using the inverted index. Can you notice
    *     a performance improvement?
