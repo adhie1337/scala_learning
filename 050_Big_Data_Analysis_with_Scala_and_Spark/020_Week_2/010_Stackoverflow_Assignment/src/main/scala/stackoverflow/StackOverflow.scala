@@ -23,6 +23,7 @@ object StackOverflow extends StackOverflow {
     val lines   = sc.textFile("src/main/resources/stackoverflow/stackoverflow.csv")
     val raw     = rawPostings(lines)
     val grouped = groupedPostings(raw)
+
     val scored  = scoredPostings(grouped)
     val vectors = vectorPostings(scored)
 //    assert(vectors.count() == 2121822, "Incorrect number of vectors: " + vectors.count())
@@ -78,7 +79,12 @@ class StackOverflow extends Serializable {
 
   /** Group the questions and answers together */
   def groupedPostings(postings: RDD[Posting]): RDD[(QID, Iterable[(Question, Answer)])] = {
-    ???
+    val questions = postings.filter(_.postingType == 1) map (q => (q.id, q))
+    val answers = postings filter (_.postingType == 2) groupBy (_.parentId.get)
+
+    val joined = questions leftOuterJoin answers
+
+    joined.groupByKey() mapValues (_ flatMap { case (q, as) => as getOrElse Iterable.empty map ((q, _))})
   }
 
 
