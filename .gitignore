@@ -1,4 +1,4 @@
-*.dat
+resources/**
 *.class
 *.swp
 .DS_Store
