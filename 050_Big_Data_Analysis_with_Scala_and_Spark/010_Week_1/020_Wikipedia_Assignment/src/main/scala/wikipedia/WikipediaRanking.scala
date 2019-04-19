@@ -66,7 +66,9 @@ object WikipediaRanking {
    *   Note: this operation is long-running. It can potentially run for
    *   several seconds.
    */
-  def rankLangsReduceByKey(langs: List[String], rdd: RDD[WikipediaArticle]): List[(String, Int)] = ???
+  def rankLangsReduceByKey(langs: List[String], rdd: RDD[WikipediaArticle]): List[(String, Int)]
+    = rdd.flatMap(article => article.words intersect langs map (word => (word, article))).countByKey().
+    mapValues(_.asInstanceOf[Int]).toList.sortBy(-_._2)
 
   def main(args: Array[String]) {
 
